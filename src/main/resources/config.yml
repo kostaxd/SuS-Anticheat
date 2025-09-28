@@ -1,0 +1,236 @@
+# SuS AntiCheat Configuration
+# Version: 1.0.0
+
+# General Settings
+general:
+  # Enable debug mode (more verbose logging)
+  debug: false
+  # Check for updates on startup
+  update-check: true
+  # Language file to use
+  language: "en"
+  # Performance monitoring
+  performance-monitoring: true
+  # Maximum TPS before disabling certain checks
+  min-tps: 18.0
+
+# Database Settings
+database:
+  # Database type: sqlite, mysql
+  type: "sqlite"
+  # SQLite file name (only used if type is sqlite)
+  sqlite-file: "sus_data.db"
+  # MySQL settings (only used if type is mysql)
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "sus_anticheat"
+    username: "sus_user"
+    password: "sus_password"
+
+# Detection Modules
+detections:
+  # Movement-based detections
+  movement:
+    # Fly detection
+    fly:
+      enabled: true
+      max-violations: 5
+      violation-decay: 30 # seconds
+      punishment: "kick"
+      sensitivity: 0.8
+    # Speed detection
+    speed:
+      enabled: true
+      max-violations: 3
+      violation-decay: 20
+      punishment: "warn"
+      max-speed-multiplier: 1.5
+    # NoFall detection
+    nofall:
+      enabled: true
+      max-violations: 10
+      violation-decay: 45
+      punishment: "ban"
+      min-fall-damage: 3.0
+    # Jesus/Water Walk detection
+    jesus:
+      enabled: true
+      max-violations: 3
+      violation-decay: 25
+      punishment: "kick"
+
+  # Combat-based detections
+  combat:
+    # KillAura detection
+    killaura:
+      enabled: true
+      max-violations: 4
+      violation-decay: 30
+      punishment: "ban"
+      max-attack-angle: 45.0
+      min-attack-delay: 150 # milliseconds
+    # Reach detection
+    reach:
+      enabled: true
+      max-violations: 5
+      violation-decay: 20
+      punishment: "kick"
+      max-reach: 4.2
+    # Auto-clicker detection
+    autoclicker:
+      enabled: true
+      max-violations: 8
+      violation-decay: 60
+      punishment: "warn"
+      max-cps: 20
+      min-cps-variance: 0.5
+    # Critical hits detection
+    criticals:
+      enabled: true
+      max-violations: 6
+      violation-decay: 25
+      punishment: "kick"
+
+  # Block interaction detections
+  block:
+    # Nuker detection
+    nuker:
+      enabled: true
+      max-violations: 3
+      violation-decay: 30
+      punishment: "ban"
+      max-blocks-per-second: 15
+    # FastBreak detection
+    fastbreak:
+      enabled: true
+      max-violations: 5
+      violation-decay: 20
+      punishment: "warn"
+      break-speed-multiplier: 1.2
+    # X-Ray detection (statistical)
+    xray:
+      enabled: true
+      max-violations: 2
+      violation-decay: 300 # 5 minutes
+      punishment: "ban"
+      suspicious-ore-ratio: 0.15
+      check-depth: 32
+
+  # Network-based detections
+  network:
+    # Packet spam detection
+    packet-spam:
+      enabled: true
+      max-violations: 10
+      violation-decay: 10
+      punishment: "kick"
+      max-packets-per-second: 100
+    # Timer detection
+    timer:
+      enabled: true
+      max-violations: 5
+      violation-decay: 30
+      punishment: "ban"
+      max-timer-speed: 1.15
+      min-timer-speed: 0.85
+
+  # Bot detection
+  bot:
+    # Anti-bot measures
+    antibot:
+      enabled: true
+      max-violations: 1
+      violation-decay: 600 # 10 minutes
+      punishment: "ban"
+      # Check for human-like behavior
+      check-mouse-movements: true
+      check-chat-patterns: true
+      check-login-patterns: true
+
+# Punishment System
+punishments:
+  # Punishment types and their configurations
+  warn:
+    enabled: true
+    message: "&c[SuS] &7You have been warned for suspicious activity!"
+    alert-staff: true
+    log: true
+  kick:
+    enabled: true
+    message: "&c[SuS] &7You have been kicked for cheating!"
+    alert-staff: true
+    log: true
+  tempban:
+    enabled: true
+    duration: 3600 # 1 hour in seconds
+    message: "&c[SuS] &7You have been temporarily banned for cheating!"
+    alert-staff: true
+    log: true
+  ban:
+    enabled: true
+    message: "&c[SuS] &7You have been permanently banned for cheating!"
+    alert-staff: true
+    log: true
+
+# Staff Alerts
+alerts:
+  # Enable staff alerts
+  enabled: true
+  # Alert format
+  format: "&c[SuS] &f{player} &7failed &f{check} &7(VL: &f{violations}&7) &8[&7{ping}ms&8]"
+  # Minimum permission level to receive alerts
+  permission: "sus.admin"
+  # Alert cooldown per player (seconds)
+  cooldown: 5
+  # Send alerts to console
+  console: true
+  # Send alerts via Discord webhook (if configured)
+  discord: false
+  discord-webhook: ""
+
+# Logging Settings
+logging:
+  # Enable file logging
+  file: true
+  # Log file name pattern (supports date formatting)
+  filename: "logs/sus-%date%.log"
+  # Log level (DEBUG, INFO, WARN, ERROR)
+  level: "INFO"
+  # Maximum log file size (MB)
+  max-size: 50
+  # Number of old log files to keep
+  max-files: 10
+  # Log to database
+  database: true
+  # Include player statistics in logs
+  include-stats: true
+
+# Performance Settings
+performance:
+  # Check intervals (ticks)
+  movement-check-interval: 1
+  combat-check-interval: 1
+  block-check-interval: 2
+  network-check-interval: 5
+  # Maximum players to check per tick
+  max-checks-per-tick: 5
+  # Enable async checking where possible
+  async-checks: true
+  # Cache player data for better performance
+  cache-player-data: true
+  cache-duration: 300 # seconds
+
+# Integration Settings
+integrations:
+  # LuckPerms integration
+  luckperms:
+    enabled: false
+    bypass-group: "staff"
+  # WorldGuard integration
+  worldguard:
+    enabled: false
+    disable-in-regions: ["spawn", "safe-zone"]
+  # PlaceholderAPI integration
+  placeholderapi:
+    enabled: false

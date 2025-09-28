@@ -1,0 +1,56 @@
+name: SuS
+version: '${project.version}'
+main: com.susanticheat.core.SuSAntiCheat
+api-version: 1.21
+authors: [SuS Team]
+description: Advanced AntiCheat plugin for Minecraft 1.21.4
+website: https://github.com/susanticheat/sus
+
+commands:
+  sus:
+    description: Main SuS AntiCheat command
+    usage: /<command> [subcommand]
+    permission: sus.admin
+    aliases: [anticheat, ac]
+  susreload:
+    description: Reload SuS configuration
+    usage: /<command>
+    permission: sus.admin.reload
+  susinfo:
+    description: Get player cheat information
+    usage: /<command> <player>
+    permission: sus.admin.info
+  susban:
+    description: Ban a player for cheating
+    usage: /<command> <player> [reason]
+    permission: sus.admin.ban
+  suskick:
+    description: Kick a player for cheating
+    usage: /<command> <player> [reason]
+    permission: sus.admin.kick
+
+permissions:
+  sus.admin:
+    description: Full access to SuS AntiCheat
+    default: op
+    children:
+      sus.admin.reload: true
+      sus.admin.info: true
+      sus.admin.ban: true
+      sus.admin.kick: true
+      sus.bypass: true
+  sus.bypass:
+    description: Bypass all cheat detection
+    default: false
+  sus.admin.reload:
+    description: Reload SuS configuration
+    default: op
+  sus.admin.info:
+    description: View player cheat information
+    default: op
+  sus.admin.ban:
+    description: Ban players for cheating
+    default: op
+  sus.admin.kick:
+    description: Kick players for cheating
+    default: op
